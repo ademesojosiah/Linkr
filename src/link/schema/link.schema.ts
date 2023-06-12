@@ -11,8 +11,10 @@ export class Link{
     originalLink:string
 
     @Prop()
-    shortenedLink:string
+    shortLink:string
 
+    @Prop()
+    clicks:number;
 
 }
 
