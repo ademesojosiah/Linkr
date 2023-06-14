@@ -7,10 +7,10 @@ import { Schema ,Prop, SchemaFactory} from "@nestjs/mongoose";
 })
 export class Link{
 
-    @Prop()
+    @Prop({required:true})
     originalLink:string
 
-    @Prop()
+    @Prop({required:true})
     shortLink:string
 
     @Prop()
