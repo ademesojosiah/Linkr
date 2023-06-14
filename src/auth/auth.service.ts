@@ -23,29 +23,62 @@ export class AuthService {
 
   async register(dto: signUpDto): Promise<registerResponse> {
     try {
-        log(dto)
       const existingEmail = await this.authModel.findOne({ email: dto.email });
       if (existingEmail) throw new ConflictException('email already exists');
       const newUser = await this.authModel.create(dto);
-      const payload:{userId:string,username:string,email:string} = {
-        userId:newUser._id,
-        username:newUser.username,
-        email:newUser.email
-      }
-      const token:string = await this.jwtService.sign(payload)
+      const payload: { userId: string; username: string; email: string } = {
+        userId: newUser._id,
+        username: newUser.username,
+        email: newUser.email,
+      };
+      const token: string = this.jwtService.sign(payload);
 
-      const userInfo:UserI = {
-        _id:newUser._id,
-        username:newUser.username,
-        email:newUser.email,
-      }
+      const userInfo: UserI = {
+        _id: newUser._id,
+        username: newUser.username,
+        email: newUser.email,
+      };
 
-      return {user:userInfo,token}
+      return { user: userInfo, token };
     } catch (error) {
-        log(error)
+      if (error.code === 11000)
+        throw new HttpException(
+          `duplicate username : ${Object.values(error.keyValue)}`,
+          401,
+        );
       throw new HttpException(`internal server error ; ${error}`, 500);
     }
   }
 
+  async login(dto: loginDto): Promise<{ user: UserI; token: string }> {
+    try {
+      const { email, password }: { email: string; password: string } = dto;
 
+      const userInfo = await this.validateUser(email, password);
+
+      const payload = {
+        userId: userInfo._id,
+        username: userInfo.username,
+        email: userInfo.email,
+      };
+      const token = this.jwtService.sign(payload);
+      return { user: userInfo, token };
+    } catch (error) {
+      throw new HttpException(`internal server error ; ${error}`, 500);
+    }
+  }
+
+  async validateUser(email: string, password: string): Promise<UserI> {
+    const user = await this.authModel.findOne({ email: email });
+
+    if (!(await user.isPassword(password))) {
+      throw new HttpException('wrong email or password', HttpStatus.NOT_FOUND);
+    }
+    return user;
+  }
+
+  async getAllUser() {
+    const users = await this.authModel.find().exec();
+    return users;
+  }
 }

@@ -30,5 +30,5 @@ userSchema.pre('save',async function(next){
 })
 
 userSchema.methods.isPassword = async function(password:string):Promise<boolean>{
-    return await bcrypt.compare(this.password,password)
+    return await bcrypt.compare(password,this.password)
 }
