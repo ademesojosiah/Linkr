@@ -15,15 +15,9 @@ export class LinkController {
     const valid = isValidUrl(body.originalLink.trim())
 
     const urlId = nanoid(6);
-    console.log(urlId);
+
 
     const shortLink = `${process.env.BASE}/${urlId}`
-    console.log(shortLink);
-    
-    
-return
-    // if(!valid)throw new HttpException('invalid url',HttpStatus.NOT_ACCEPTABLE)
-    // this.linkService.create(body,'jojo')
-
+    return this.linkService.create(body,shortLink)
   }
 }
