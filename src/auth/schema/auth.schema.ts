@@ -1,5 +1,6 @@
 import { Schema ,Prop, SchemaFactory} from "@nestjs/mongoose";
-import {Document} from 'mongoose';
+import mongoose, {Document} from 'mongoose';
+import { Link } from "src/link/schema/link.schema";
 import * as bcrypt from 'bcrypt' ;
 
 
@@ -16,9 +17,10 @@ export class Auth extends Document{
     email:string
 
     @Prop({required:true,minlength:8})
-    password:string;
+    password:string;    
 
     isPassword:Function;
+
 
 }
 
