@@ -31,5 +31,8 @@ export class LinkController {
 
   }
 
-
+  @Get()
+  async get(@Param() param:string ){
+   return await this.linkService.getLink({shortLink:param})
+  }
 }

@@ -3,6 +3,7 @@ import {InjectModel} from '@nestjs/mongoose'
 import { Link } from './schema/link.schema';
 import * as mongoose from 'mongoose';
 import { creatLinkDto } from './dto/createLink.dto';
+import { linkSearch } from './interface/link.interface';
 
 @Injectable()
 export class LinkService {
@@ -28,4 +29,13 @@ export class LinkService {
        
     }
 
+
+    async getLink(body:linkSearch){
+        try {
+            const link = await this.linkModel.findOne(body)
+            return link
+        } catch (error) {
+            
+        }
+    }
 }
