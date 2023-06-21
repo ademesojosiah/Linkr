@@ -12,11 +12,11 @@ export class Link extends Document{
     @Prop({required:true})
     originalLink:string
 
-    @Prop({required:true})
+    @Prop({required:true,unique:true})
     shortLink:string
 
     @Prop({type:mongoose.Schema.Types.ObjectId, ref:Auth.name})
-    user:Auth
+    userId:mongoose.Schema.Types.ObjectId
 
     @Prop()
     clicks:number;

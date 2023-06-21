@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, Injectable } from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose'
 import { Link } from './schema/link.schema';
 import * as mongoose from 'mongoose';
@@ -13,9 +13,19 @@ export class LinkService {
     ){}
 
 
-    create(body:creatLinkDto,generatedLink:string):Promise<Link>{
-        const newLink = this.linkModel.create({...body,shortLink:generatedLink})
-        return newLink
-
+    async create(body:creatLinkDto,generatedLink:string):Promise<Link>{
+        try {
+        const newLink = await this.linkModel.create({...body,shortLink:generatedLink})
+        return newLink   
+        } catch (error) {
+            if (error.code === 11000)
+            throw new HttpException(
+              `Custom name already exist : ${Object.values(error.keyValue)}`,
+              500,
+            );
+          throw new HttpException(`internal server; ${error}`, 500);
+        }
+       
     }
+
 }
