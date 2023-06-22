@@ -14,28 +14,30 @@ export class LinkController {
 
   // short url generator
   @Post('create')
-  async getLink(@Body() body:creatLinkDto):Promise<Link>  {
-
-    const valid = isValidUrl(body.originalLink.trim())
+  async createLink(@Body() body:creatLinkDto,  @Req() req:any):Promise<Link>  {
+    const {user:{userId}} = req
+    const newBody = {...body,userId:userId} 
+    
+    const valid = isValidUrl(newBody?.originalLink?.trim())
 
     const urlId = nanoid(6);
-    const {customLink} = body
+    const {customLink} = newBody
     const trimmedCustomLink = customLink?.trim()
     if(!trimmedCustomLink){
-      body.customLink = undefined
+      newBody.customLink = undefined
       const shortLink = `${process.env.BASE}/${urlId}`
-      return await this.linkService.create(body,shortLink)
+      return await this.linkService.create(newBody,shortLink)
     }
 
       const shortLink = `${process.env.BASE}/${customLink}`
-      body.customLink = undefined
-    return await this.linkService.create(body,shortLink)
+      newBody.customLink = undefined
+    return await this.linkService.create(newBody,shortLink)
 
 
   }
 
   @Get(':param')
-  async get(@Param('param') param:string, @Req() req:any, @Res() res: Response):Promise<void>{
+  async redirect(@Param('param') param:string, @Res() res: Response):Promise<void>{
     param =  `${process.env.BASE}/${param}`
     const originalLink = await this.linkService.getLink({shortLink:param})
    return res.redirect(`${originalLink}`)

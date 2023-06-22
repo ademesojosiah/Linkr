@@ -31,8 +31,7 @@ export class LinkService {
 
 
     async getLink(body:linkSearch):Promise<string>{
-        try {
-            
+        try {     
             const link = await this.linkModel.findOne(body)
             return link.originalLink
         } catch (error) {
