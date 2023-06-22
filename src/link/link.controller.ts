@@ -1,11 +1,14 @@
-import { Body, Controller, Post, HttpException, HttpStatus, Get, Param } from '@nestjs/common';
+import { Body, Controller, Post, HttpException, HttpStatus, Get, Param, UseGuards, Req, Res } from '@nestjs/common';
 import { LinkService } from './link.service';
 import { creatLinkDto } from './dto/createLink.dto';
 import { isValidUrl } from './utils/utils';
 import { nanoid } from 'nanoid';
 import { Link } from './schema/link.schema';
+import { JwtAuthGuard } from 'src/auth/guard';
+import { Request, Response } from 'express';
 
 @Controller()
+@UseGuards(JwtAuthGuard)
 export class LinkController {
   constructor(private readonly linkService: LinkService) {}
 
@@ -32,7 +35,9 @@ export class LinkController {
   }
 
   @Get(':param')
-  async get(@Param(":param") param:string ){
-   return await this.linkService.getLink({shortLink:param})
+  async get(@Param('param') param:string, @Req() req:any, @Res() res: Response):Promise<void>{
+    param =  `${process.env.BASE}/${param}`
+    const originalLink = await this.linkService.getLink({shortLink:param})
+   return res.redirect(`${originalLink}`)
   }
 }

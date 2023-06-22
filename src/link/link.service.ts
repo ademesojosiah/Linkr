@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common';
+import { HttpException, Injectable} from '@nestjs/common';
 import {InjectModel} from '@nestjs/mongoose'
 import { Link } from './schema/link.schema';
 import * as mongoose from 'mongoose';
@@ -30,12 +30,13 @@ export class LinkService {
     }
 
 
-    async getLink(body:linkSearch){
+    async getLink(body:linkSearch):Promise<string>{
         try {
-            const link = await this.linkModel.findOne(body)
-            return link
-        } catch (error) {
             
+            const link = await this.linkModel.findOne(body)
+            return link.originalLink
+        } catch (error) {
+            throw new HttpException(error,500)
         }
     }
 }
