@@ -18,7 +18,7 @@ export class Link extends Document{
     @Prop({type:mongoose.Schema.Types.ObjectId, ref:Auth.name})
     userId:mongoose.Schema.Types.ObjectId
 
-    @Prop()
+    @Prop({default:0})
     clicks:number;
 
 }
