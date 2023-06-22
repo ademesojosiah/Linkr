@@ -1,9 +1,5 @@
 import {
-  Body,
   Controller,
-  Post,
-  HttpException,
-  HttpStatus,
   Get,
   Param,
   UseGuards,
@@ -14,7 +10,6 @@ import {
 import { LinkService } from './link.service';
 import { Link } from './schema/link.schema';
 import { JwtAuthGuard } from 'src/auth/guard';
-import { Request, Response } from 'express';
 
 @Controller('api')
 export class AnalyticsController {
