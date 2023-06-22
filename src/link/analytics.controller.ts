@@ -32,15 +32,15 @@ export class AnalyticsController {
   //get link by Id
   @UseGuards(JwtAuthGuard)
   @Get('link/:id')
-  async getLinkById(@Param('id') id:string){ 
-    return await this.linkService.getLinkById(id)
+  async getLinkById(@Param('id') id:string, @Req() req:any){ 
+    return await this.linkService.getLinkById(id,req.user.userId)
   }
 
   //delete link by Id
   @UseGuards(JwtAuthGuard)
   @Delete('link/:id')
-  async deleteLink(@Param('id') id:string){
-    return this.linkService.deleteLink(id)
+  async deleteLink(@Param('id') id:string, @Req() req:any){
+    return this.linkService.deleteLink(id,req.user.userId)
   }
 }
 
