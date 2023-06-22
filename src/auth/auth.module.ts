@@ -7,6 +7,7 @@ import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
 import {env} from 'process'
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { JwtAuthGuard } from './guard';
 
 @Module({
   imports:[MongooseModule.forFeature([{name:Auth.name,schema:userSchema}]),
@@ -19,6 +20,6 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     inject: [ConfigService],
   }),],
   providers:[AuthService,JwtStrategy],
-  controllers: [AuthController]
+  controllers: [AuthController],
 })
 export class AuthModule {}
