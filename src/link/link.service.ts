@@ -4,7 +4,6 @@ import { Link } from './schema/link.schema';
 import * as mongoose from 'mongoose';
 import { creatLinkDto } from './dto/createLink.dto';
 import { Icached, linkSearch } from './interface/link.interface';
-import { DeleteResult } from 'typeorm/driver/mongodb/typings';
 import { Auth } from 'src/auth/schema/auth.schema';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
