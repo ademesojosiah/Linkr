@@ -1,17 +1,24 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable , Inject} from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Link } from './schema/link.schema';
 import * as mongoose from 'mongoose';
 import { creatLinkDto } from './dto/createLink.dto';
-import { linkSearch } from './interface/link.interface';
+import { Icached, linkSearch } from './interface/link.interface';
 import { DeleteResult } from 'typeorm/driver/mongodb/typings';
 import { Auth } from 'src/auth/schema/auth.schema';
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
+import { Cache } from 'cache-manager';
+import { Click } from './schema/clicks.schema';
+
 
 @Injectable()
 export class LinkService {
   constructor(
     @InjectModel(Link.name)
     private linkModel: mongoose.Model<Link>,
+    @InjectModel(Click.name)
+    private clickModel: mongoose.Model<Click>,
+    @Inject(CACHE_MANAGER) private cacheService:Cache 
   ) {}
 
   async create(body: creatLinkDto, generatedLink: string): Promise<Link> {
@@ -29,29 +36,34 @@ export class LinkService {
           `Custom name already exist : ${Object.values(error.keyValue)}`,
           500,
         );
-      throw new HttpException(`internal server; ${error}`, 500);
+      throw new HttpException(`${error}`|| `internal server error`, 500);
     }
   }
 
   async getLink(body: linkSearch): Promise<string> {
     try {
+      const cached = await this.cacheService.get<Icached>(`${body.shortLink}`)
+      if(cached){
+        return cached.originalLink
+      }
       const link = await this.linkModel.findOneAndUpdate(
         body,
         { $inc: { clicks: 1 } },
         { new: true },
       );
+      if(!link)throw new Error("link doesn't exist")
+      // await this.clickModel.create()
+      await this.cacheService.set(`${body.shortLink}`,link)        
       return link.originalLink;
     } catch (error) {
-      console.log(error);
-
-      throw new HttpException('Internal server error', 500);
+      throw new HttpException( `${error}`|| `internal server error`, error.status || 500);
     }
   }
 
   async isAuthor(id: string, userId: string): Promise<boolean> {
     const isAuthor = await this.linkModel.findOne({ _id: id, userId: userId });
     if (!isAuthor) {
-      throw new HttpException('Link not found', 503);
+      throw new Error('Link not found');
     }
     return true;
   }
@@ -63,8 +75,7 @@ export class LinkService {
         .populate({ path: 'userId', select: '_id username email' });
       return links;
     } catch (error) {
-      console.log(error);
-      throw new HttpException('Internal server error', 500);
+      throw new HttpException( `${error}`|| `internal server error`, error.status || 500);
     }
   }
 
@@ -77,8 +88,7 @@ export class LinkService {
       return link;
     } catch (error) {
       console.log(error);
-      if (error.status === 503) throw new HttpException(error.response, 401);
-      throw new HttpException('unable to get link', 500);
+      throw new HttpException( `${error}`|| `internal server error`, error.status || 500);
     }
   }
 
@@ -88,9 +98,7 @@ export class LinkService {
       const link = await this.linkModel.deleteOne({ _id: id });
       return link;
     } catch (error) {
-      console.log(error);
-      if (error.status === 503) throw new HttpException(error.esponse, 401);
-      throw new HttpException('unable to delete link', 500);
+      throw new HttpException( `${error}`|| `internal server error`, error.status || 500);
     }
   }
 }
