@@ -39,14 +39,14 @@ export class AuthService {
         email: newUser.email,
       };
 
-      return { user: userInfo, token };
+      return {message:'Account created succesfully', user: userInfo, token };
     } catch (error) {
       if (error.code === 11000)
         throw new HttpException(
           `duplicate username : ${Object.values(error.keyValue)}`,
           401,
         );
-      throw new HttpException(`internal server error ; ${error}`, 500);
+      throw new HttpException(`${error}` || `internal server error`, 500);
     }
   }
 
@@ -64,7 +64,7 @@ export class AuthService {
       const token = this.jwtService.sign(payload);
       return { user: userInfo, token };
     } catch (error) {
-      throw new HttpException(`internal server error ; ${error}`, 500);
+      throw new HttpException(`${error}` || `internal server error`, 500);
     }
   }
 
@@ -72,7 +72,7 @@ export class AuthService {
     const user = await this.authModel.findOne({ email: email });
 
     if (!(await user.isPassword(password))) {
-      throw new HttpException('wrong email or password', HttpStatus.NOT_FOUND);
+      throw new HttpException('wrong email or password, Please try again', HttpStatus.NOT_FOUND);
     }
     return user;
   }

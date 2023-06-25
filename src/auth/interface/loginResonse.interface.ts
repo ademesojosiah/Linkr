@@ -5,8 +5,9 @@ export interface loginResponse{
 }
 
 export interface registerResponse{
-    user:UserI
-    token:string
+    message:string;
+    user:UserI;
+    token:string;
 }
 
 export interface UserI{
@@ -14,6 +15,6 @@ export interface UserI{
     username:string;
     email:string;
     password?:string;
-    createdAt?:Date,
-    updatedAt?:Date
+    createdAt?:Date;
+    updatedAt?:Date;
 }
