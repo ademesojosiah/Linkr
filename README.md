@@ -62,8 +62,9 @@ linkr
 
 - Responses
 
-Success
+- Success
 
+```
 {
     "message": "Account created succesfully",
     "user": {
@@ -77,7 +78,7 @@ Success
 
 - Response statusCodes
 
-```javascript
+```
   - 201: success || Created
   - 401: error || Unauthorized error
   - 400: error || Bad Request
