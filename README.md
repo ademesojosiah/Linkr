@@ -24,7 +24,7 @@ linkr
 
 ## Useful Links.
 
-- [Postman Documentation](https://documenter.getpostman.com/view/26999767/2s93Y6sJkQ)
+- [Postman Documentation]
 
 ---
 
@@ -32,8 +32,7 @@ linkr
 
 - Login
 - Registration
-- Inventory List
-- Inventory creation
+- shorten link, create custom url
 - Unit test case for all functions and apis
 
 ---
