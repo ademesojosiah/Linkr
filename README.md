@@ -1,73 +1,233 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# OURPASS_CAPSTONE
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+linkr
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+---
 
-## Description
+## Stack
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+<div align="center">
 
-## Installation
+<a href="">![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)</a>
+<a href="">![NestJS](https://img.shields.io/badge/nestjs-%23E0234E.svg?style=for-the-badge&logo=nestjs&logoColor=white)</a>
+<a href="">![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)</a>
+<a href="">![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)</a>
 
-```bash
-$ npm install
+</div>
+
+<div align="center">
+
+<a href="">![ESLint](https://img.shields.io/badge/ESLint-4B3263?style=for-the-badge&logo=eslint&logoColor=white)</a>
+<a href="">![Postman](https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white)</a>
+
+</div>
+
+## Useful Links.
+
+- [Postman Documentation]
+
+---
+
+## Basic Features
+
+- Login
+- Registration
+- shorten link, create custom url
+- Unit test case for all functions and apis
+
+---
+
+## User
+
+| field            | data_type | constraints      |
+| ---------------- | --------- | ---------------- |
+| email            | string    | required, unique |
+| username         | string    | required, unique |
+| password         | string    | required         |
+---
+
+### Signup User
+
+- Route: auth/signup
+- Method: POST
+- Body:
+
+```
+{
+    "username":"josiah",
+    "email":"joj@gmail.com",
+    "password":"secret123"
+}
 ```
 
-## Running the app
+- Responses
 
-```bash
-# development
-$ npm run start
+- Success
 
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+```
+{
+    "message": "Account created succesfully",
+    "user": {
+        "_id": "64979456edc53fe97a2908a8",
+        "username": "josiahh",
+        "email": "jo@gmail.com"
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDk3OTQ1NmVkYzUzZmU5N2EyOTA4YTgiLCJ1c2VybmFtZSI6Impvc2lhaGgiLCJlbWFpbCI6ImpvQGdtYWlsLmNvbSIsImlhdCI6MTY4NzY1NTUxMSwiZXhwIjoxNjg3NjU5MTExfQ.yVMDBv9Q2kKwlAY8NtLgL4rZepRBseHBG-7s4tS7irk"
+}
 ```
 
-## Test
+- Response statusCodes
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
+```
+  - 201: success || Created
+  - 401: error || Unauthorized error
+  - 400: error || Bad Request
+  - 500: error || Internal Server Error
 ```
 
-## Support
+---
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+### Login User
 
-## Stay in touch
+- Route: auth/login
+- Method: POST
+- Body:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+```
+{
+    "email":"jojo@gmail.com",
+    "password":"secret123"
+}
+```
 
-## License
+- Responses
 
-Nest is [MIT licensed](LICENSE).
+Success
+
+```
+ "user": {
+        "_id": "648a0bffe1990ac0fabec60f",
+        "username": "josiah",
+        "email": "jojo@gmail.com",
+        "password": "$2b$10$Vj6SKvXd3hsEhs1sj16CHOiweY7/BMndomJV0Xqhyhsk2ReQ5o8Yq",
+        "createdAt": "2023-06-14T18:50:39.076Z",
+        "updatedAt": "2023-06-14T18:50:39.076Z",
+        "__v": 0
+    },
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDhhMGJmZmUxOTkwYWMwZmFiZWM2MGYiLCJ1c2VybmFtZSI6Impvc2lhaCIsImVtYWlsIjoiam9qb0BnbWFpbC5jb20iLCJpYXQiOjE2ODc2NTU2MzIsImV4cCI6MTY4NzY1OTIzMn0.YG-XFEUdNZtEWCEC5TjprLa7a5LH4RdAjajQZbLEKlU"
+}
+```
+
+---
+
+### Inventory
+
+| field           | data_type | constraints | 
+| --------------- | --------- | ----------- |
+| originalLink    | string    | required    |
+|customLink        | enums     | optional   | 
+               
+
+---
+
+## Link Routes
+
+---
+
+### create a link -Pubished (logged in users only )
+
+- Route: /create
+- Method: POST
+- Header
+  -authorization : Bearer {token}
+- Body:   
+{
+    "originalLink":"http://www.facebook.com"
+}                                          |
+- Responses
+
+Success
+
+```
+{
+    "originalLink": "http://www.gmail.com",
+    "shortLink": "http://localhost:3333/foWNxT",
+    "userId": "648a0bffe1990ac0fabec60f",
+    "clicks": 0,
+    "_id": "6497965cedc53fe97a2908ab",
+    "createdAt": "2023-06-25T01:20:28.078Z",
+    "updatedAt": "2023-06-25T01:20:28.078Z",
+    "__v": 0
+}
+```
+
+
+
+---
+
+### Delete a link (logged in users only )
+
+- Route: /api/link/:id
+- Method: DELETE
+- Header
+  -authorization : Bearer {token}
+- Responses
+
+Success
+
+```
+{
+    "raw": [],
+    "affected": 1
+}
+
+
+```
+
+---
+
+### Get all Inventories ( users only )
+
+- Route: /api/links
+- Method: GET
+- Header:
+  -authorization : Bearer {token}
+
+- Responses
+
+Success
+
+```
+{
+[}
+}
+```
+
+
+
+### Get inventory by id (logged in users only )
+
+- Route: /api/link/:id
+- Method: GET
+- Header
+  -authorization : Bearer {token}
+- Responses
+
+Success
+
+```
+{
+    "originalLink": "http://www.gmail.com",
+    "shortLink": "http://localhost:3333/foWNxT",
+    "userId": "648a0bffe1990ac0fabec60f",
+    "clicks": 0,
+    "_id": "6497965cedc53fe97a2908ab",
+    "createdAt": "2023-06-25T01:20:28.078Z",
+    "updatedAt": "2023-06-25T01:20:28.078Z",
+    "__v": 0
+}
+```
+
+## Contributors
+
+- Josiah Ademeso (monte carlo)
