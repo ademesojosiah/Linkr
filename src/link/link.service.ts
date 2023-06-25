@@ -4,7 +4,6 @@ import { Link } from './schema/link.schema';
 import * as mongoose from 'mongoose';
 import { creatLinkDto } from './dto/createLink.dto';
 import { Icached, linkSearch } from './interface/link.interface';
-import { Auth } from 'src/auth/schema/auth.schema';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { Click } from './schema/clicks.schema';
@@ -91,7 +90,7 @@ export class LinkService {
     }
   }
 
-  async deleteLink(id: string, userId: string): Promise<DeleteResult> {
+  async deleteLink(id: string, userId: string): Promise<any> {
     await this.isAuthor(id, userId);
     try {
       const link = await this.linkModel.deleteOne({ _id: id });
