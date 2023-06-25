@@ -6,10 +6,16 @@ import { linkSchema } from './schema/link.schema';
 import { JwtAuthGuard } from 'src/auth/guard';
 import { JwtStrategy } from 'src/auth/jwt.strategy';
 import { AnalyticsController } from './analytics.controller';
+import { clickSchema } from './schema/click.schema';
 
 @Module({
-  imports:[MongooseModule.forFeature([{name:'Link',schema:linkSchema}])],
-  controllers: [LinkController,AnalyticsController],
-  providers: [LinkService,JwtStrategy]
+  imports: [
+    MongooseModule.forFeature([
+      { name: 'Link', schema: linkSchema },
+      { name: 'Click' , schema:clickSchema},
+    ]),
+  ],
+  controllers: [LinkController, AnalyticsController],
+  providers: [LinkService, JwtStrategy],
 })
 export class LinkModule {}

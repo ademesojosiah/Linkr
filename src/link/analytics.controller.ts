@@ -38,4 +38,3 @@ export class AnalyticsController {
     return this.linkService.deleteLink(id,req.user.userId)
   }
 }
-
