@@ -60,9 +60,11 @@ export class LinkController {
     @Req() req:Request
   ): Promise<void> {
     const userIp = ip,
-    agent = req.headers['user-agent'];
+    agent = req.headers['user-agent'],
+    referer = req.headers.referer
+    
     param = `${process.env.BASE}/${param}`;
-    const originalLink = await this.linkService.getLink({ shortLink: param }, userIp,agent);
+    const originalLink = await this.linkService.getLink({ shortLink: param }, userIp,agent,referer);
     return res.redirect(`${originalLink}`);
 
   }

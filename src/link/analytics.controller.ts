@@ -10,6 +10,7 @@ import {
 import { LinkService } from './link.service';
 import { Link } from './schema/link.schema';
 import { JwtAuthGuard } from 'src/auth/guard';
+import { Click } from './schema/click.schema';
 
 @Controller('api')
 export class AnalyticsController {
@@ -20,14 +21,13 @@ export class AnalyticsController {
   @Get('/links')
   async getLinks(@Req() req:any):Promise<Link[]>{
     const {user:{userId}} = req
-    console.log({userId:userId});
     return await this.linkService.getAllLinks(userId);
   }
 
   //get link by Id
   @UseGuards(JwtAuthGuard)
   @Get('link/:id')
-  async getLinkById(@Param('id') id:string, @Req() req:any){ 
+  async getLinkById(@Param('id') id:string, @Req() req:any):Promise<{analytics:Click[],link:Link,noClicks:number}>{
     return await this.linkService.getLinkById(id,req.user.userId)
   }
 

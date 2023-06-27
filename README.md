@@ -199,7 +199,7 @@ Success
 
 ```
 {
-[}
+[]
 }
 ```
 
@@ -217,14 +217,33 @@ Success
 
 ```
 {
-    "originalLink": "http://www.gmail.com",
-    "shortLink": "http://localhost:3333/foWNxT",
-    "userId": "648a0bffe1990ac0fabec60f",
-    "clicks": 0,
-    "_id": "6497965cedc53fe97a2908ab",
-    "createdAt": "2023-06-25T01:20:28.078Z",
-    "updatedAt": "2023-06-25T01:20:28.078Z",
-    "__v": 0
+    "analytics": [
+        {
+            "_id": "649a3a1caa3d595dbbc507dc",
+            "ip": "::1",
+            "referer": null,
+            "agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/114.0.0.0 Safari/537.36",
+            "linkId": "64940a16eefd2897e0f0fd35",
+            "createdAt": "2023-06-27T01:23:40.254Z",
+            "updatedAt": "2023-06-27T01:23:40.254Z",
+            "__v": 0
+        }
+    ],
+    "link": {
+        "_id": "64940a16eefd2897e0f0fd35",
+        "originalLink": "http://www.facebook.com",
+        "shortLink": "http://localhost:3333/jojoli",
+        "userId": {
+            "_id": "648a0bffe1990ac0fabec60f",
+            "username": "josiah",
+            "email": "jojo@gmail.com"
+        },
+        "clicks": 44,
+        "createdAt": "2023-06-22T08:45:10.019Z",
+        "updatedAt": "2023-06-27T01:23:39.879Z",
+        "__v": 0
+    },
+    "noClicks": 4
 }
 ```
 

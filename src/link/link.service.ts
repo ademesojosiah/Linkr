@@ -38,7 +38,7 @@ export class LinkService {
     }
   }
 
-  async getLink(body: linkSearch, ip: string, agent: string): Promise<string> {
+  async getLink(body: linkSearch, ip: string, agent: string, referer:string): Promise<string> {
     try {
       const cached = await this.cacheService.get<Icached>(`${body.shortLink}`);
       if (cached) {
@@ -59,6 +59,7 @@ export class LinkService {
         ip: ip,
         location: geo?.country,
         agent: agent,
+        referer: referer? referer:null
       });      
       await this.cacheService.set(`${body.shortLink}`, link, 6000);
       return link.originalLink;
@@ -82,7 +83,6 @@ export class LinkService {
     try {
       const links = await this.linkModel
         .find({ userId: id })
-        .populate({ path: 'userId', select: '_id username email' });
       return links;
     } catch (error) {
       throw new HttpException(
@@ -92,17 +92,16 @@ export class LinkService {
     }
   }
 
-  async getLinkById(id: string, userId: string) {
+  async getLinkById(id: string, userId: string):Promise<{analytics:Click[],link:Link,noClicks:number}> {
     try {
       await this.isAuthor(id, userId);
       const analytics = await this.clickModel.find(
-        { linkId: id },
-        'location agent ip',
+        { linkId: id }
       );
       const link = await this.linkModel
         .findById(id)
         .populate({ path: 'userId', select: '_id username email' });
-      return analytics;
+      return {analytics:analytics,link:link,noClicks:analytics.length};
     } catch (error) {
       console.log(error);
       throw new HttpException(

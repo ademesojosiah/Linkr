@@ -15,6 +15,9 @@ export class Click extends Document{
     @Prop({required:true})
     ip:string
 
+    @Prop({required:false})
+    referer:string
+
     @Prop({required:true})
     agent:string
 
