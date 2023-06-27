@@ -7,6 +7,7 @@ import { Icached, linkSearch } from './interface/link.interface';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { Click } from './schema/click.schema';
+import * as geoip from 'geoip-country';
 
 @Injectable()
 export class LinkService {
@@ -37,7 +38,7 @@ export class LinkService {
     }
   }
 
-  async getLink(body: linkSearch): Promise<string> {
+  async getLink(body: linkSearch, ip: string, agent: string): Promise<string> {
     try {
       const cached = await this.cacheService.get<Icached>(`${body.shortLink}`);
       if (cached) {
@@ -48,9 +49,18 @@ export class LinkService {
         { $inc: { clicks: 1 } },
         { new: true },
       );
+
+      
       if (!link) throw new Error("link doesn't exist");
-      // await this.clickModel.create()
-      await this.cacheService.set(`${body.shortLink}`, link);
+
+      const geo = geoip.lookup(ip);
+      const click = await this.clickModel.create({
+        linkId: link._id,
+        ip: ip,
+        location: geo?.country,
+        agent: agent,
+      });      
+      await this.cacheService.set(`${body.shortLink}`, link, 6000);
       return link.originalLink;
     } catch (error) {
       throw new HttpException(
@@ -82,13 +92,17 @@ export class LinkService {
     }
   }
 
-  async getLinkById(id: string, userId: string): Promise<Link> {
+  async getLinkById(id: string, userId: string) {
     try {
       await this.isAuthor(id, userId);
+      const analytics = await this.clickModel.find(
+        { linkId: id },
+        'location agent ip',
+      );
       const link = await this.linkModel
         .findById(id)
         .populate({ path: 'userId', select: '_id username email' });
-      return link;
+      return analytics;
     } catch (error) {
       console.log(error);
       throw new HttpException(

@@ -1,6 +1,7 @@
 import { Schema ,Prop, SchemaFactory} from "@nestjs/mongoose";
 import mongoose, { Document } from "mongoose";
 import { Auth } from "src/auth/schema/auth.schema";
+import { Click } from "./click.schema";
 
 
 
@@ -16,7 +17,7 @@ export class Link extends Document{
     shortLink:string
 
     @Prop({type:mongoose.Schema.Types.ObjectId, ref:Auth.name})
-    userId:mongoose.Schema.Types.ObjectId
+    userId:mongoose.Schema.Types.ObjectId;
 
     @Prop({default:0})
     clicks:number;
@@ -24,3 +25,5 @@ export class Link extends Document{
 }
 
 export const linkSchema = SchemaFactory.createForClass(Link)
+
+

@@ -8,7 +8,8 @@ import {
   Req,
   Res,
   UseInterceptors,
-  Inject
+  Inject,
+  Ip
 } from '@nestjs/common';
 import { LinkService } from './link.service';
 import { creatLinkDto } from './dto/createLink.dto';
@@ -55,9 +56,13 @@ export class LinkController {
   async redirect(
     @Param('param') param: string,
     @Res() res: Response,
+    @Ip() ip:any,
+    @Req() req:Request
   ): Promise<void> {
+    const userIp = ip,
+    agent = req.headers['user-agent'];
     param = `${process.env.BASE}/${param}`;
-    const originalLink = await this.linkService.getLink({ shortLink: param });
+    const originalLink = await this.linkService.getLink({ shortLink: param }, userIp,agent);
     return res.redirect(`${originalLink}`);
 
   }

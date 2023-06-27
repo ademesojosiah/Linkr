@@ -9,11 +9,17 @@ import { Link } from "./link.schema";
 })
 export class Click extends Document{
 
-    @Prop({required:true})
+    @Prop({required:false})
     location:string
 
+    @Prop({required:true})
+    ip:string
+
+    @Prop({required:true})
+    agent:string
+
     @Prop({type:mongoose.Schema.Types.ObjectId, ref:Link.name})
-    link:mongoose.Schema.Types.ObjectId
+    linkId:mongoose.Schema.Types.ObjectId
 
 
 }
