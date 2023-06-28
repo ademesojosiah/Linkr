@@ -29,6 +29,7 @@
     "@nestjs/mongoose": "^9.2.2",
     "@nestjs/passport": "^9.0.3",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/throttler": "^4.1.0",
     "@types/geoip-country": "^4.0.0",
     "@types/nanoid": "^3.0.0",
     "@types/validator": "^13.7.17",
