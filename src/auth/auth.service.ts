@@ -50,7 +50,7 @@ export class AuthService {
     }
   }
 
-  async login(dto: loginDto): Promise<{ user: UserI; token: string }> {
+  async login(dto: loginDto): Promise<{message:string, user: UserI; token: string }> {
     try {
       const { email, password }: { email: string; password: string } = dto;
 
@@ -62,7 +62,7 @@ export class AuthService {
         email: userInfo.email,
       };
       const token = this.jwtService.sign(payload);
-      return { user: userInfo, token };
+      return {message:'login succesful', user: userInfo, token };
     } catch (error) {
       throw new HttpException(`${error}` || `internal server error`, 500);
     }
