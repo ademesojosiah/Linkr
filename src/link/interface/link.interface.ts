@@ -23,3 +23,9 @@ export interface Ianalytics{
     updatedAt: Date;
     __v: number;
 }
+
+export interface DeleteResp{
+        acknowledged: boolean;
+        deletedCount: number;
+
+}

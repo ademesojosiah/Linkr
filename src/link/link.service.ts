@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Link } from './schema/link.schema';
 import * as mongoose from 'mongoose';
 import { creatLinkDto } from './dto/createLink.dto';
-import { Icached, linkSearch } from './interface/link.interface';
+import { DeleteResp, Icached, linkSearch } from './interface/link.interface';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { Click } from './schema/click.schema';
@@ -112,7 +112,7 @@ export class LinkService {
     }
   }
 
-  async deleteLink(id: string, userId: string): Promise<{success:boolean, link:DeleteResult}> {
+  async deleteLink(id: string, userId: string): Promise<{success:boolean, link:DeleteResp}> {
     await this.isAuthor(id, userId);
     try {
       const link = await this.linkModel.deleteOne({ _id: id });
