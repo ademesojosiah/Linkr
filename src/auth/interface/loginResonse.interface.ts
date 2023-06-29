@@ -5,6 +5,7 @@ export interface loginResponse{
 }
 
 export interface registerResponse{
+    success:boolean;
     message:string;
     user:UserI;
     token:string;

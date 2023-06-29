@@ -8,6 +8,7 @@ import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { Click } from './schema/click.schema';
 import * as geoip from 'geoip-country';
+import { DeleteResult } from 'typeorm/driver/mongodb/typings';
 
 @Injectable()
 export class LinkService {
@@ -19,13 +20,13 @@ export class LinkService {
     @Inject(CACHE_MANAGER) private cacheService: Cache,
   ) {}
 
-  async create(body: creatLinkDto, generatedLink: string): Promise<Link> {
+  async create(body: creatLinkDto, generatedLink: string): Promise<{success:boolean,link:Link}> {
     try {
       const newLink = await this.linkModel.create({
         ...body,
         shortLink: generatedLink,
       });
-      return newLink;
+      return {success:true,link:newLink};
     } catch (error) {
       console.log(error);
 
@@ -79,11 +80,11 @@ export class LinkService {
     return true;
   }
 
-  async getAllLinks(id: string): Promise<Link[]> {
+  async getAllLinks(id: string): Promise<{success:boolean,link:Link[]}> {
     try {
       const links = await this.linkModel
         .find({ userId: id })
-      return links;
+      return {success:true,link:links};
     } catch (error) {
       throw new HttpException(
         `${error}` || `internal server error`,
@@ -92,7 +93,7 @@ export class LinkService {
     }
   }
 
-  async getLinkById(id: string, userId: string):Promise<{analytics:Click[],link:Link,noClicks:number}> {
+  async getLinkById(id: string, userId: string):Promise<{success:boolean,analytics:Click[],link:Link,noClicks:number}> {
     try {
       await this.isAuthor(id, userId);
       const analytics = await this.clickModel.find(
@@ -101,7 +102,7 @@ export class LinkService {
       const link = await this.linkModel
         .findById(id)
         .populate({ path: 'userId', select: '_id username email' });
-      return {analytics:analytics,link:link,noClicks:analytics.length};
+      return {success:true, analytics:analytics,link:link,noClicks:analytics.length};
     } catch (error) {
       console.log(error);
       throw new HttpException(
@@ -111,11 +112,11 @@ export class LinkService {
     }
   }
 
-  async deleteLink(id: string, userId: string): Promise<any> {
+  async deleteLink(id: string, userId: string): Promise<{success:boolean, link:DeleteResult}> {
     await this.isAuthor(id, userId);
     try {
       const link = await this.linkModel.deleteOne({ _id: id });
-      return link;
+      return {success:true,link:link};
     } catch (error) {
       throw new HttpException(
         `${error}` || `internal server error`,

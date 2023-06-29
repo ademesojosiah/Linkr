@@ -69,6 +69,7 @@ linkr
 
 ```
 {
+    "success": true,
     "message": "Account created succesfully",
     "user": {
         "_id": "64979456edc53fe97a2908a8",
@@ -108,7 +109,10 @@ linkr
 Success
 
 ```
- "user": {
+{
+    "success": true,
+    "message": "Account logged in succesfully",
+    "user": {
         "_id": "648a0bffe1990ac0fabec60f",
         "username": "josiah",
         "email": "jojo@gmail.com",
@@ -117,7 +121,7 @@ Success
         "updatedAt": "2023-06-14T18:50:39.076Z",
         "__v": 0
     },
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDhhMGJmZmUxOTkwYWMwZmFiZWM2MGYiLCJ1c2VybmFtZSI6Impvc2lhaCIsImVtYWlsIjoiam9qb0BnbWFpbC5jb20iLCJpYXQiOjE2ODc2NTU2MzIsImV4cCI6MTY4NzY1OTIzMn0.YG-XFEUdNZtEWCEC5TjprLa7a5LH4RdAjajQZbLEKlU"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NDhhMGJmZmUxOTkwYWMwZmFiZWM2MGYiLCJ1c2VybmFtZSI6Impvc2lhaCIsImVtYWlsIjoiam9qb0BnbWFpbC5jb20iLCJpYXQiOjE2ODc5OTYwMTQsImV4cCI6MTY4Nzk5OTYxNH0.nN7NBjBWvPTCMe1qccnLx3e610F0u4kTQxdUmjwNdoQ"
 }
 ```
 
@@ -128,7 +132,7 @@ Success
 | field           | data_type | constraints | 
 | --------------- | --------- | ----------- |
 | originalLink    | string    | required    |
-|customLink        | enums     | optional   | 
+| customLink        | enums     | optional   | 
                
 
 ---
@@ -145,22 +149,26 @@ Success
   -authorization : Bearer {token}
 - Body:   
 {
-    "originalLink":"http://www.facebook.com"
-}                                          |
+    "originalLink":"http://www.gmail.com",
+    "customLink":"hello" optional
+}                                          
 - Responses
 
 Success
 
 ```
 {
-    "originalLink": "http://www.gmail.com",
-    "shortLink": "http://localhost:3333/foWNxT",
-    "userId": "648a0bffe1990ac0fabec60f",
-    "clicks": 0,
-    "_id": "6497965cedc53fe97a2908ab",
-    "createdAt": "2023-06-25T01:20:28.078Z",
-    "updatedAt": "2023-06-25T01:20:28.078Z",
-    "__v": 0
+    "success": true,
+    "link": {
+        "originalLink": "http://www.gmail.com",
+        "shortLink": "http://localhost:3333/hello",
+        "userId": "648a0bffe1990ac0fabec60f",
+        "clicks": 0,
+        "_id": "649cc7c6b9984cf56f71d988",
+        "createdAt": "2023-06-28T23:52:38.042Z",
+        "updatedAt": "2023-06-28T23:52:38.042Z",
+        "__v": 0
+    }
 }
 ```
 
@@ -180,8 +188,11 @@ Success
 
 ```
 {
-    "raw": [],
-    "affected": 1
+    "success": true,
+    "link": {
+        "acknowledged": true,
+        "deletedCount": 1
+    }
 }
 
 
@@ -220,6 +231,7 @@ Success
 
 ```
 {
+    "success": true,
     "analytics": [
         {
             "_id": "649a3a1caa3d595dbbc507dc",

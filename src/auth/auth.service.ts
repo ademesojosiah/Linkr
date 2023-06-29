@@ -39,7 +39,7 @@ export class AuthService {
         email: newUser.email,
       };
 
-      return {message:'Account created succesfully', user: userInfo, token };
+      return {success:true,message:'Account created succesfully', user: userInfo, token };
     } catch (error) {
       if (error.code === 11000)
         throw new HttpException(
@@ -50,7 +50,7 @@ export class AuthService {
     }
   }
 
-  async login(dto: loginDto): Promise<{message:string, user: UserI; token: string }> {
+  async login(dto: loginDto): Promise<registerResponse> {
     try {
       const { email, password }: { email: string; password: string } = dto;
 
@@ -62,7 +62,7 @@ export class AuthService {
         email: userInfo.email,
       };
       const token = this.jwtService.sign(payload);
-      return {message:'login succesful', user: userInfo, token };
+      return {success:true, message:'Account logged in succesfully', user: userInfo, token };
     } catch (error) {
       throw new HttpException(`${error}` || `internal server error`, 500);
     }

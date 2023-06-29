@@ -19,7 +19,7 @@ export class AnalyticsController {
   //get links
   @UseGuards(JwtAuthGuard)
   @Get('/links')
-  async getLinks(@Req() req:any):Promise<Link[]>{
+  async getLinks(@Req() req:any):Promise<{success:boolean,link:Link[]}>{
     const {user:{userId}} = req
     return await this.linkService.getAllLinks(userId);
   }
@@ -27,7 +27,7 @@ export class AnalyticsController {
   //get link by Id
   @UseGuards(JwtAuthGuard)
   @Get('link/:id')
-  async getLinkById(@Param('id') id:string, @Req() req:any):Promise<{analytics:Click[],link:Link,noClicks:number}>{
+  async getLinkById(@Param('id') id:string, @Req() req:any):Promise<{success:boolean,analytics:Click[],link:Link,noClicks:number}>{
     return await this.linkService.getLinkById(id,req.user.userId)
   }
 

@@ -28,7 +28,7 @@ export class LinkController {
   // short url generator
   @UseGuards(JwtAuthGuard)
   @Post('create')
-  async createLink(@Body() body: creatLinkDto, @Req() req: any): Promise<Link> {
+  async createLink(@Body() body: creatLinkDto, @Req() req: any): Promise<{success:boolean,link:Link}> {
     const {
       user: { userId },
     } = req;
