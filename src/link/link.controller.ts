@@ -7,8 +7,6 @@ import {
   UseGuards,
   Req,
   Res,
-  UseInterceptors,
-  Inject,
   Ip
 } from '@nestjs/common';
 import { LinkService } from './link.service';
@@ -18,12 +16,12 @@ import { nanoid } from 'nanoid';
 import { Link } from './schema/link.schema';
 import { JwtAuthGuard } from 'src/auth/guard';
 import { Request, Response } from 'express';
-import { CacheInterceptor,CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Cache } from 'cache-manager';
+import { HttpService } from '@nestjs/axios';
+
 
 @Controller()
 export class LinkController {
-  constructor(private readonly linkService: LinkService) {}
+  constructor(private readonly linkService: LinkService, private httpService: HttpService) {}
 
   // short url generator
   @UseGuards(JwtAuthGuard)
@@ -59,12 +57,21 @@ export class LinkController {
     @Ip() ip:any,
     @Req() req:Request
   ): Promise<void> {
-    const userIp = ip,
+    const axios = await this.httpService.axiosRef({
+      url:`http://api.ipapi.com/api/check?access_key=${process.env.IPAPI_KEY}`,
+      method:'Get'
+    })
+    
+    const userIp = axios.data.ip,
     agent = req.headers['user-agent'],
-    referer = req.headers.referer
+    referer = req.headers.referer,
+    location = `${axios.data.city}, ${axios.data.country_name} `
+
+    console.log(location);
+    
     
     param = `${process.env.BASE}/${param}`;
-    const originalLink = await this.linkService.getLink({ shortLink: param }, userIp,agent,referer);
+    const originalLink = await this.linkService.getLink({ shortLink: param }, userIp,agent,referer,location);
     return res.redirect(`${originalLink}`);
 
   }

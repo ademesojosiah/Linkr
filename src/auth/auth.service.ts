@@ -11,7 +11,6 @@ import { signUpDto } from './dto/signUp.dto';
 import { loginDto } from './dto/login.dto';
 import { JwtService } from '@nestjs/jwt';
 import { UserI, registerResponse } from './interface/loginResonse.interface';
-import { log } from 'console';
 
 @Injectable()
 export class AuthService {

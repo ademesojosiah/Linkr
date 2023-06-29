@@ -37,7 +37,7 @@ export class LinkService {
     }
   }
 
-  async getLink(body: linkSearch, ip: string, agent: string, referer:string): Promise<string> {
+  async getLink(body: linkSearch, ip: string, agent: string, referer:string, location:string): Promise<string> {
     try {
       const cached = await this.cacheService.get<Icached>(`${body.shortLink}`);
       if (cached) {
@@ -52,11 +52,10 @@ export class LinkService {
       
       if (!link) throw new Error("link doesn't exist");
 
-      const geo = geoip.lookup(ip);
       const click = await this.clickModel.create({
         linkId: link._id,
         ip: ip,
-        location: geo?.country,
+        location:location,
         agent: agent,
         referer: referer? referer:null
       });      
