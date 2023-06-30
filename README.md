@@ -127,7 +127,7 @@ Success
 
 ---
 
-### Inventory
+### Links
 
 | field           | data_type | constraints | 
 | --------------- | --------- | ----------- |
@@ -141,17 +141,19 @@ Success
 
 ---
 
-### create a link -Pubished (logged in users only )
+### create a  shortened link  (logged in users only )
 
 - Route: /create
 - Method: POST
 - Header
-  -authorization : Bearer {token}
-- Body:   
+   - authorization : Bearer {token}
+- Body:
+```  
 {
     "originalLink":"http://www.gmail.com",
-    "customLink":"hello" optional
-}                                          
+    "customLink":"hello"  //optional
+}
+```                                       
 - Responses
 
 Success
@@ -181,7 +183,7 @@ Success
 - Route: /api/link/:id
 - Method: DELETE
 - Header
-  -authorization : Bearer {token}
+  - authorization : Bearer {token}
 - Responses
 
 Success
@@ -200,12 +202,12 @@ Success
 
 ---
 
-### Get all Inventories ( users only )
+### Get all links ( users only )
 
 - Route: /api/links
 - Method: GET
 - Header:
-  -authorization : Bearer {token}
+  - authorization : Bearer {token}
 
 - Responses
 
@@ -219,12 +221,12 @@ Success
 
 
 
-### Get inventory by id (logged in users only )
+### Get link by id (logged in users only )
 
 - Route: /api/link/:id
 - Method: GET
 - Header
-  -authorization : Bearer {token}
+  - authorization : Bearer {token}
 - Responses
 
 Success
