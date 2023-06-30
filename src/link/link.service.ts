@@ -110,8 +110,8 @@ export class LinkService {
   }
 
   async deleteLink(id: string, userId: string): Promise<{success:boolean, link:DeleteResp}> {
-    await this.isAuthor(id, userId);
     try {
+      await this.isAuthor(id, userId);
       const link = await this.linkModel.deleteOne({ _id: id });
       return {success:true,link:link};
     } catch (error) {

@@ -1,0 +1,320 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "linkr",
+    "contact": {},
+    "version": "1.0"
+  },
+  "servers": [
+    {
+      "url": "https://linkr-mvp2.onrender.com",
+      "variables": {}
+    }
+  ],
+  "paths": {
+    "/auth/signup": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "signup",
+        "description": "endpoint to signup/ register an account",
+        "operationId": "signup",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/signuprequest"
+                  },
+                  {
+                    "example": {
+                      "username": "josiahh",
+                      "email": "jo@gmail.com",
+                      "password": "secret123"
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "username": "josiahh",
+                "email": "jo@gmail.com",
+                "password": "secret123"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "summary": "login",
+        "operationId": "login",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/loginrequest"
+                  },
+                  {
+                    "example": {
+                      "email": "jojo@gmail.com",
+                      "password": "secret123"
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "email": "jojo@gmail.com",
+                "password": "secret123"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/create": {
+      "post": {
+        "tags": [
+          "link"
+        ],
+        "summary": "post link",
+        "operationId": "postlink",
+        "parameters": [],
+        "requestBody": {
+          "description": "",
+          "content": {
+            "application/json": {
+              "schema": {
+                "allOf": [
+                  {
+                    "$ref": "#/components/schemas/postlinkrequest"
+                  },
+                  {
+                    "example": {
+                      "originalLink": "http://www.hello.com",
+                      "customLink": "hello"
+                    }
+                  }
+                ]
+              },
+              "example": {
+                "originalLink": "http://www.hello.com",
+                "customLink": "hello"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/links": {
+      "get": {
+        "tags": [
+          "link"
+        ],
+        "summary": "get links",
+        "operationId": "getlinks",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    },
+    "/api/link/{id}": {
+      "get": {
+        "tags": [
+          "link"
+        ],
+        "summary": "get links By Id",
+        "operationId": "getlinksById",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      },
+      "delete": {
+        "tags": [
+          "link"
+        ],
+        "summary": "delete link",
+        "operationId": "deletelink",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "",
+            "required": true,
+            "explode": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "headers": {}
+          }
+        },
+        "deprecated": false,
+        "security": [
+          {
+            "bearer": []
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "signuprequest": {
+        "title": "signuprequest",
+        "required": [
+          "username",
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "username": "josiahh",
+          "email": "jo@gmail.com",
+          "password": "secret123"
+        }
+      },
+      "loginrequest": {
+        "title": "loginrequest",
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "email": "jojo@gmail.com",
+          "password": "secret123"
+        }
+      },
+      "postlinkrequest": {
+        "title": "postlinkrequest",
+        "required": [
+          "originalLink",
+          "customLink"
+        ],
+        "type": "object",
+        "properties": {
+          "originalLink": {
+            "type": "string"
+          },
+          "customLink": {
+            "type": "string"
+          }
+        },
+        "example": {
+          "originalLink": "http://www.hello.com",
+          "customLink": "hello"
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    }
+  },
+  "security": [],
+  "tags": [
+    {
+      "name": "Auth"
+    },
+    {
+      "name": "link"
+    }
+  ]
+}
