@@ -1,3 +1,5 @@
+import { ObjectId } from "mongoose";
+
 export interface linkSearch{
     shortLink:string;
 }
@@ -28,4 +30,27 @@ export interface DeleteResp{
         acknowledged: boolean;
         deletedCount: number;
 
+}
+
+export interface ILink{
+    originalLink: string;
+    shortLink: string;  
+    userId:ObjectId;
+    clicks: number;
+    _id: ObjectId;
+    createdAt?:Date;
+    updatedAt?: Date;
+    __v?: number;
+}
+
+export interface IClick{
+    _id: ObjectId;
+    ip: string;
+    referer: string ;
+    location: string;
+    agent: string;
+    linkId: ObjectId;
+    createdAt?: Date;
+    updatedAt?: Date;
+    _v?:number;
 }

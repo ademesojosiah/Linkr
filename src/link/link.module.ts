@@ -8,6 +8,7 @@ import { JwtStrategy } from 'src/auth/jwt.strategy';
 import { AnalyticsController } from './analytics.controller';
 import { clickSchema } from './schema/click.schema';
 import { HttpModule } from '@nestjs/axios';
+import { AuthModule } from 'src/auth/auth.module';
 
 @Module({
   imports: [
@@ -15,7 +16,8 @@ import { HttpModule } from '@nestjs/axios';
       { name: 'Link', schema: linkSchema },
       { name: 'Click' , schema:clickSchema},
     ]),
-    HttpModule
+    HttpModule,
+    AuthModule
   ],
   controllers: [LinkController, AnalyticsController],
   providers: [LinkService, JwtStrategy],

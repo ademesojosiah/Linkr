@@ -14,9 +14,10 @@ import { creatLinkDto } from './dto/createLink.dto';
 import { isValidUrl } from './utils/utils';
 import { nanoid } from 'nanoid';
 import { Link } from './schema/link.schema';
-import { JwtAuthGuard } from 'src/auth/guard';
+import { JwtAuthGuard } from '.././auth/guard';
 import { Request, Response } from 'express';
 import { HttpService } from '@nestjs/axios';
+import { ILink } from './interface/link.interface';
 
 
 @Controller()
@@ -26,7 +27,7 @@ export class LinkController {
   // short url generator
   @UseGuards(JwtAuthGuard)
   @Post('create')
-  async createLink(@Body() body: creatLinkDto, @Req() req: any): Promise<{success:boolean,link:Link}> {
+  async createLink(@Body() body: creatLinkDto, @Req() req: any): Promise<{success:boolean,link:ILink}> {
     const {
       user: { userId },
     } = req;

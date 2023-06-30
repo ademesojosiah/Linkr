@@ -51,7 +51,7 @@ describe('AuthController', () => {
       expect(await controller.signup(signUpDto)).toBe(result);
     });
 
-    it('should signup a new user', async () => {
+    it('should login a user', async () => {
 
       const result = {
         success: true,

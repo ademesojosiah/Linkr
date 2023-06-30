@@ -1,6 +1,6 @@
 import { Schema ,Prop, SchemaFactory} from "@nestjs/mongoose";
 import mongoose, { Document } from "mongoose";
-import { Auth } from "src/auth/schema/auth.schema";
+import { Auth } from "../../auth/schema/auth.schema";
 import { Click } from "./click.schema";
 
 

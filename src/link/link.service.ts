@@ -3,7 +3,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Link } from './schema/link.schema';
 import * as mongoose from 'mongoose';
 import { creatLinkDto } from './dto/createLink.dto';
-import { DeleteResp, Icached, linkSearch } from './interface/link.interface';
+import { DeleteResp, IClick, ILink, Icached, linkSearch } from './interface/link.interface';
 import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Cache } from 'cache-manager';
 import { Click } from './schema/click.schema';
@@ -18,7 +18,7 @@ export class LinkService {
     @Inject(CACHE_MANAGER) private cacheService: Cache,
   ) {}
 
-  async create(body: creatLinkDto, generatedLink: string): Promise<{success:boolean,link:Link}> {
+  async create(body: creatLinkDto, generatedLink: string): Promise<{success:boolean,link:ILink}> {
     try {
       const newLink = await this.linkModel.create({
         ...body,
@@ -77,7 +77,7 @@ export class LinkService {
     return true;
   }
 
-  async getAllLinks(id: string): Promise<{success:boolean,link:Link[]}> {
+  async getAllLinks(id: string): Promise<{success:boolean,link:ILink[]}> {
     try {
       const links = await this.linkModel
         .find({ userId: id })
@@ -90,7 +90,7 @@ export class LinkService {
     }
   }
 
-  async getLinkById(id: string, userId: string):Promise<{success:boolean,analytics:Click[],link:Link,noClicks:number}> {
+  async getLinkById(id: string, userId: string):Promise<{success:boolean,analytics:IClick[],link:ILink,noClicks:number}> {
     try {
       await this.isAuthor(id, userId);
       const analytics = await this.clickModel.find(

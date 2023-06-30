@@ -9,8 +9,9 @@ import {
 } from '@nestjs/common';
 import { LinkService } from './link.service';
 import { Link } from './schema/link.schema';
-import { JwtAuthGuard } from 'src/auth/guard';
+import { JwtAuthGuard } from '../auth/guard';
 import { Click } from './schema/click.schema';
+import { IClick, ILink } from './interface/link.interface';
 
 @Controller('api')
 export class AnalyticsController {
@@ -19,7 +20,7 @@ export class AnalyticsController {
   //get links
   @UseGuards(JwtAuthGuard)
   @Get('/links')
-  async getLinks(@Req() req:any):Promise<{success:boolean,link:Link[]}>{
+  async getLinks(@Req() req:any):Promise<{success:boolean,link:ILink[]}>{
     const {user:{userId}} = req
     return await this.linkService.getAllLinks(userId);
   }
@@ -27,7 +28,7 @@ export class AnalyticsController {
   //get link by Id
   @UseGuards(JwtAuthGuard)
   @Get('link/:id')
-  async getLinkById(@Param('id') id:string, @Req() req:any):Promise<{success:boolean,analytics:Click[],link:Link,noClicks:number}>{
+  async getLinkById(@Param('id') id:string, @Req() req:any):Promise<{success:boolean,analytics:IClick[],link:ILink,noClicks:number}>{
     return await this.linkService.getLinkById(id,req.user.userId)
   }
 
