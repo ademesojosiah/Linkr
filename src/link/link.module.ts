@@ -3,12 +3,11 @@ import { LinkController } from './link.controller';
 import { LinkService } from './link.service';
 import { MongooseModule } from '@nestjs/mongoose';
 import { linkSchema } from './schema/link.schema';
-import { JwtAuthGuard } from 'src/auth/guard';
-import { JwtStrategy } from 'src/auth/jwt.strategy';
+import { JwtStrategy } from '../auth/jwt.strategy';
 import { AnalyticsController } from './analytics.controller';
 import { clickSchema } from './schema/click.schema';
 import { HttpModule } from '@nestjs/axios';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [

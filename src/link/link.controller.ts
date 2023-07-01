@@ -66,10 +66,7 @@ export class LinkController {
     const userIp = axios.data.ip,
     agent = req.headers['user-agent'],
     referer = req.headers.referer,
-    location = `${axios.data.city}, ${axios.data.country_name} `
-
-    console.log(location);
-    
+    location = `${axios.data.city}, ${axios.data.country_name} `    
     
     param = `${process.env.BASE}/${param}`;
     const originalLink = await this.linkService.getLink({ shortLink: param }, userIp,agent,referer,location);
