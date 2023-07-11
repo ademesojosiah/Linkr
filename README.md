@@ -1,6 +1,4 @@
-# OURPASS_CAPSTONE
-
-linkr
+#linkr
 
 ---
 
